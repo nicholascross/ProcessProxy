@@ -25,12 +25,12 @@ extension Process {
         writeInput(pipe: inputPipe, content: input)
         return readOutput(pipe: outputPipe)
     }
-    
+
     @discardableResult
     public static func executeProcess(command: String, arguments: [String], inputPipe: Pipe? = nil, outputPipe: Pipe = Pipe()) throws -> Process {
         let process = Process()
         process.executableURL = try URL(fileURLWithPath: which(command))
-        process.arguments = sanitizeArguments(arguments)
+        process.arguments = arguments
         process.standardInput = inputPipe
         process.standardOutput = outputPipe
         process.standardError = outputPipe
@@ -50,9 +50,4 @@ extension Process {
         let outputData = pipe.fileHandleForReading.readDataToEndOfFile()
         return String(decoding: outputData, as: UTF8.self)
     }
-    
-    private static func sanitizeArguments(_ arguments: [String]) -> [String] {
-        return arguments.map { $0.contains(" ") ? "\"\($0)\"" : $0 }
-    }
 }
-
