@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ProxyConfig: Codable {
+public struct ProxyConfig: Decodable {
     public let routes: [RouteMapping]
 
     public static func loadConfig(path: String) throws -> ProxyConfig {
