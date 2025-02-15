@@ -48,6 +48,9 @@ public struct RouteMapping: Decodable, Sendable {
     /// dynamic input mapped from request body piped to command
     public let inputMapping: String?
 
+    /// content type of the response
+    public let contentType: String?
+
     public func extractArguments(_ requestBody: String) throws -> [String] {
         var extractedArguments: [String] = []
         for argument in arguments ?? [] {
